@@ -1,0 +1,20 @@
+1. Show keyboard shortcuts: ctrl-k ctrl-s
+2. go to keybindings.json
+
+3. Install multi-command plugin (https://marketplace.visualstudio.com/items?itemName=ryuta46.multi-command)
+4. do custom command @ keybindings.json
+{
+      "key": "ctrl+v",
+      "command": "extension.multiCommand.execute",
+      "args": {
+        "sequence": ["editor.action.clipboardPasteAction", "editor.action.formatDocument"]
+      }
+    }
+
+
+TO INSTALL SHADCN (https://www.shadcn-vue.com/docs/installation/vite.html)
+
+
+npx shadcn-vue@latest init
+
+npx shadcn-vue@latest add <component>
