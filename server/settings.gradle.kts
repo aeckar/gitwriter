@@ -1,1 +1,1 @@
-rootProject.name = "docsite"
+rootProject.name = "gitwriter"

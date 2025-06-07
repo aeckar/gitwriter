@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
@@ -30,6 +29,11 @@ dependencies {
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.logging)
     implementation(libs.kaml)
+    implementation(libs.commonmark.java.core)
+    implementation(libs.commonmark.java.task.list.items)
+    implementation(libs.commonmark.java.tables)
+    implementation(libs.commonmark.java.footnotes)
+    implementation(libs.commonmark.java.strikethrough)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
