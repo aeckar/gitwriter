@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style>
+        .editor {
+            width: 500px;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+            white-space: nowrap;
+            resize: vertical;
+        }
+        .red {
+            color: red;
+            caret-color: black;
+        }
+    </style>
+</head>
+<body>
+
+<!--
+Contraints:
+    - How to control how many lines can show at once?           width/height CSS
+    - How to resize editable block using mouse?                 resize: both|vertical|horizontal; CSS
+        o DO NOT MAKE EDITOR RESIZABLE, give enough space
+    - How to not wrap text in block?                            white-space: nowrap; css
+    - How to replace text with formatted text?                  JS replace innerHTML, listen on type, replace .value of input ("hidden"), submit by making pull rq
+    - How to handle typing of user input?
+
+    const editor = document.getElementById("editor");
+
+  editor.addEventListener("input", () => {
+    console.log("Typed content:", editor.innerText);
+    onEditorChange(editor.innerText); // your custom function
+  });
+
+    - How to generate highlighting? (and based on context)?     Custom parser
+    - Scroll bar?                                               overflow: auto CSS
+
+    - (Later:) How to provide intellisense/completion?
+
+    🛠️ Best Practices If You Do It
+Debounce requests (e.g., send after 300ms of no typing)
+Use incremental updates if possible (e.g., send only diffs or changed region)
+Cache results or memoize previous inputs
+Gracefully handle failure (fallback to unformatted text)
+Use WebSocket for interactive/streaming formatting (optional)
+-->
+
+<div id="textbox" contenteditable class="editor"><span class="red" oninput="updateEditor">red text</span> or not
+    <label>
+        <input name="text" type="hidden">
+    </label>
+
+</div>
+<script>
+    const updateEditor = () => {
+        document.getElementsByClassName("editor")[0].val
+    }
+</script>
+</body>
+</html>
