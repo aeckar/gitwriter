@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 
 fun Application.configureSerialization() {
     install(ContentNegotiation) {
-        json(Json {
+        json(Json { // Enable sending objects as JSON over HTTP
             prettyPrint = true
             isLenient = true
         })

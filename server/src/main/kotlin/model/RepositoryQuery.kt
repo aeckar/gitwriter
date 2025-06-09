@@ -1,6 +1,7 @@
 package model
 
-data class GithubSearchQuery(val searchTerms: List<String>, val filters: Map<String, String>) {
+/** A repository search query, tokenized according to GitHub's search syntax. */
+data class RepositoryQuery(val searchTerms: List<String>, val filters: Map<String, String>) {
     override fun toString(): String {
         val searchTerms = searchTerms.joinToString("+")
         val filters = filters.entries.joinToString("+") { (filter, value) -> "$filter:$value" }
@@ -8,7 +9,7 @@ data class GithubSearchQuery(val searchTerms: List<String>, val filters: Map<Str
     }
 
     companion object {
-        fun parse(query: String): GithubSearchQuery {
+        fun parse(query: String): RepositoryQuery {
             val searchTerms = mutableListOf<String>()
             val filters = mutableMapOf<String, String>()
             var termIndex = -1
@@ -35,7 +36,7 @@ data class GithubSearchQuery(val searchTerms: List<String>, val filters: Map<Str
                     termIndex = index
                 }
             }
-            return GithubSearchQuery(searchTerms, filters)
+            return RepositoryQuery(searchTerms, filters)
         }
     }
 }
