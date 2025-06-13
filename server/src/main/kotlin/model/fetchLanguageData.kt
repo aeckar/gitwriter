@@ -10,7 +10,7 @@ import io.ktor.server.application.*
 import kotlinx.serialization.decodeFromString
 
 /**
- * Fetches additional language information for HTML, Markdown, and AsciiDoc
+ * Fetches additional language information for Markdown and AsciiDoc
  * from the `github-linguist/linguist` repository.
  * @see markupLanguages
  */
@@ -38,5 +38,5 @@ suspend fun Application.fetchLanguageData(): Map<String, MarkupLanguage> {
     ))
     return yaml
         .decodeFromString<Map<String, MarkupLanguage>>(response.bodyAsText())
-        .filter { (name) -> name in setOf("HTML", "Markdown", "AsciiDoc") }
+        .filter { (name) -> name in setOf("Markdown", "AsciiDoc") }
 }

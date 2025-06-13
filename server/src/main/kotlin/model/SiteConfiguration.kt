@@ -3,6 +3,9 @@ package model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+// todo in markdown, show sanitized tags
+// https://github.com/OWASP/java-html-sanitizer?tab=readme-ov-file -- use all default sanitizers
+
 /**
  * [Site] configuration, as written in `site.yml`.
  *

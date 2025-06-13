@@ -4,6 +4,7 @@ import controller.httpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
 import io.ktor.http.isSuccess
 import io.ktor.http.path
@@ -14,7 +15,9 @@ class Site(val repoUrl: String, val config: SiteConfiguration) {
     suspend fun fetchResource(path: String): String? {
         val response = httpClient.get {
             headers {
-                appendCommonHeaders()
+                append(HttpHeaders.Accept, "text/json;charset=UTF-8")
+                append(HttpHeaders.AcceptCharset, "ISO-8859-1")
+                append(HttpHeaders.UserAgent, "Ktor Client")
             }
             url {
                 protocol = URLProtocol.HTTPS
