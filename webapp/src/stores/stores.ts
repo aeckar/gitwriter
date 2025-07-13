@@ -1,11 +1,15 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const document = defineStore('document', () => {
-    const homeIcon = ref("")
-    const favicon = ref("")
-    const pageTitle = ref("")
-    const githubLink = ref("")
+export function resetError() {
+    const error = useError()
+    error.status = 404
+    error.description = "Not Found"
+}
 
-    return { homeIcon, favicon, pageTitle, githubLink }
+export const useError = defineStore('error', () => {
+    const status = ref(0)
+    const description = ref('')
+
+    return { status, description }
 })

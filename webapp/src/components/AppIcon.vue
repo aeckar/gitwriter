@@ -1,19 +1,16 @@
 <script setup lang="ts">
+import { PencilRuler } from 'lucide-vue-next'
+
 defineProps(['color'])
 </script>
 
 <template>
-    <a href="/" class="material-symbols-outlined home-icon" :style="{ color }">
-        contract_edit
-    </a>
-</template> // todo later: make dynamic, user-definable
+    <PencilRuler class="app-icon" :style="{ color }"/>
+</template>
 
 <style scoped>
-.home-icon {
-    color: white;
-    text-decoration: none;
-    user-select: none;
-    padding-right: 10px;
-    font-size: 30pt;
+.app-icon {
+    width: 60px;
+    height: 60px;
 }
 </style>
