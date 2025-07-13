@@ -3,6 +3,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.navbar-item {
+  padding: 10px 10px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
