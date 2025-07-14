@@ -12,8 +12,8 @@ const router = createRouter({
             component: HomeView,
         },
         {
-            path: '/site/:user/:repo/:page(.*)*',
-            name: 'document',
+            path: '/pages/:user/:repo/:page*',
+            name: 'pages',
             component: DocumentView,
         },
         {
@@ -23,8 +23,7 @@ const router = createRouter({
         },
         {
             path: '/:path(.*)*',
-            name: 'unknown',
-            component: HttpErrorView,
+            redirect: () => { return { path: '/error' } }
         }
     ],
 })

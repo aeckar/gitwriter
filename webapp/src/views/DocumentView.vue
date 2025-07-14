@@ -5,29 +5,16 @@ import { useError } from '@/stores/stores.ts'
 import GithubIcon from '@/components/GithubIcon.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted } from 'vue'
-
-type NavigableTree = {
-    name: string
-    children: Array<NavigableTree | string>
-};
+import { type Page } from '@/lib/utils.ts'
 
 const router = useRouter()
 const route = useRoute()
 
 const { user, repo } = route.params
 
-let document: {
-    name: string,
-    icon: string,
-    favicon: string,
-    contentRoot: string,
-    contentDirectory: NavigableTree,
-    folderAliases: Map<String, String>
-}
+let page: Page
 
-let contentHtml: string
-
-onMounted(async () => {
+onMounted(async () => { // todo change from localhost on launch
     const response = await fetch(`http://localhost:8080/${user}/${repo}/${route.params.page}`)
     if (!response.ok) {
         const error = useError()
@@ -35,18 +22,19 @@ onMounted(async () => {
         error.description = response.statusText
         await router.push({ name: "/error" })
     }
-    ({ document, contentHtml } = await response.json())
+    page = await response.json()
+    console.log(page)
 })
 </script>
 
 <template>
     <div id="layout">
         <NavigationBar>
-            <a href="/document/{{ user }}/{{ repo }}/" target="_blank">
+            <a href="/pages/{{ user }}/{{ repo }}/" target="_blank">
                 <AppIcon />
             </a>
-            <div id="name">
-                {{ document.name }}
+            <div id="title">
+                {{ page.site.title }}
             </div>
             <a href="{{ content(user, repo) }}">
                 <GithubIcon/>
@@ -57,7 +45,7 @@ onMounted(async () => {
 
             </nav>
             <div id="content-body">
-                <template v-html="contentHtml"></template>
+                <div id="content-text" v-html="page.content"></div>
                 <footer class="faded-text footer-text">
                     Generated using GitWriter &copy; Angel Eckardt 2025
                 </footer>
@@ -79,6 +67,11 @@ onMounted(async () => {
 }
 
 #content-navigation {
+
+}
+
+
+#content-text {
 
 }
 </style>

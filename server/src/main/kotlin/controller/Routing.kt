@@ -1,10 +1,15 @@
 package controller
 
+import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.MissingRequestParameterException
+import io.ktor.server.plugins.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.util.getOrFail
+import io.ktor.server.util.*
 import model.Document
+import model.Page
+import model.Repository
 
 /*
 navigator.sendBeacon('/api/cleanup', JSON.stringify({ sessionId }))
@@ -30,20 +35,25 @@ param = uname/repo/path
 
 I send:
 // */
+// todo later: search api
 
 fun Application.configureRouting() {
+    install(CORS) {
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowHeader(HttpHeaders.ContentType)
+        anyHost() // fixme: for dev only! use specific domains in production
+    }
+
     routing {
-        get("/search/{repo...}") {
-
-        }
-
-        get("/site/{user}/{repo}/{path...}") {
+        get("/pages/{user}/{repo}/{path...}") {
             val user = call.parameters.getOrFail("user")
-            val repo = call.parameters.getOrFail("repo")
-            val path = call.parameters.getAll("path") ?: throw MissingRequestParameterException("path")
-            val document = Document.get(user, repo)
-            val page = document[path.joinToString("/")]
-
+            val repoName = call.parameters.getOrFail("repo")
+            val path = call.parameters.getAll("path")?.joinToString("/") ?: throw MissingRequestParameterException("path")
+            val repo = Repository(user, repoName)
+            val document = Document.get(repo)
+            val contentHtml = document[path]
+            call.respond(Page(document, contentHtml))
         }
     }
 }

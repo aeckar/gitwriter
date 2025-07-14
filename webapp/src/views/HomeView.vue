@@ -5,6 +5,7 @@ import AppIcon from "@/components/AppIcon.vue";
 import { Search } from 'lucide-vue-next';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 useHead({
     title: 'GitWriter',
@@ -20,10 +21,11 @@ useHead({
 const router = useRouter()
 const search = ref('')
 
-function onSubmit() {
+async function onSubmit() {
     const route = search.value.trim()
     if (route.length != 0) {
-        await router.push({ name: `/site/${route}` })
+        console.log(route)
+        await router.push(`/pages/${route}`)
     }
 }
 </script>
@@ -43,14 +45,13 @@ function onSubmit() {
                 </div>
                 <span id="greeting" class="faded-text">Share markup with ease!</span>
             </header>
-
-            <div id="search">
-                <form @submit.prevent="onSubmit">
-                    <Input type="text" v-model="search" placeholder="Search repositories..." />
+            <div class="relative w-full max-w-sm items-center">
+                <form v-on:submit="onSubmit">
+                    <Input v-model="search" name="search" type="text" placeholder="Search..." class="pl-10" />
                     <button type="submit" class="invisible"></button>
                 </form>
-                <span>
-                    <Search id="search-icon" color="white" />
+                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
+                    <Search class="size-6 text-muted-foreground" color="white"/>
                 </span>
             </div>
         </div>
@@ -68,8 +69,6 @@ function onSubmit() {
 nav, footer {
     gap: 5px;
 }
-
-
 
 nav a:hover {
     color: white;
@@ -101,34 +100,6 @@ nav a:hover {
 #greeting {
     padding-bottom: 30px;
     font-size: 12pt;
-}
-
-#search-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: white;
-}
-
-#search {
-    input {
-        padding-left: 2.5rem;
-    }
-
-    span {
-        position: absolute;
-        inset: 0 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-    }
-
-    width: 1000px;
-    position: relative;
-    max-width: 24rem;
-    display: flex;
-    align-items: center;
 }
 
 #version {

@@ -5,8 +5,6 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.runBlocking
-import model.fetchLanguageData
-import model.markupLanguages
 
 // use existing textmate grammars + monaco to render text
 /*
