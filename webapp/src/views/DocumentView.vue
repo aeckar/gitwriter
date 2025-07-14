@@ -5,25 +5,25 @@ import { useError } from '@/stores/stores.ts'
 import GithubIcon from '@/components/GithubIcon.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted } from 'vue'
-import { type Page } from '@/lib/utils.ts'
+import type { Page } from '@/lib/content.ts'
 
 const router = useRouter()
 const route = useRoute()
 
 const { user, repo } = route.params
 
-let page: Page
+let page: string//todo
 
 onMounted(async () => { // todo change from localhost on launch
-    const response = await fetch(`http://localhost:8080/${user}/${repo}/${route.params.page}`)
+    console.log("Hello!")
+    const response = await fetch(`http://localhost:8080/pages/${user}/${repo}/${route.params.page}`)
     if (!response.ok) {
         const error = useError()
         error.status = response.status
         error.description = response.statusText
         await router.push({ name: "/error" })
     }
-    page = await response.json()
-    console.log(page)
+    page=await response.text()
 })
 </script>
 
@@ -34,7 +34,7 @@ onMounted(async () => { // todo change from localhost on launch
                 <AppIcon />
             </a>
             <div id="title">
-                {{ page.site.title }}
+                {{ page }} page.site.title
             </div>
             <a href="{{ content(user, repo) }}">
                 <GithubIcon/>
@@ -44,8 +44,9 @@ onMounted(async () => { // todo change from localhost on launch
             <nav id="content-directory">
 
             </nav>
-            <div id="content-body">
-                <div id="content-text" v-html="page.content"></div>
+            <div id="content-body" style="color:black; font-size: 40pt;">
+                <div id="content-text" ></div>
+                {{ page }}
                 <footer class="faded-text footer-text">
                     Generated using GitWriter &copy; Angel Eckardt 2025
                 </footer>

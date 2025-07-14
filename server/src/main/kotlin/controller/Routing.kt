@@ -7,9 +7,9 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import model.Document
-import model.Page
-import model.Repository
+import model.content.Document
+import model.content.Page
+import model.vcs.Repository
 
 /*
 navigator.sendBeacon('/api/cleanup', JSON.stringify({ sessionId }))

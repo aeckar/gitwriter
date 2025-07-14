@@ -46,7 +46,7 @@ async function onSubmit() {
                 <span id="greeting" class="faded-text">Share markup with ease!</span>
             </header>
             <div class="relative w-full max-w-sm items-center">
-                <form v-on:submit="onSubmit">
+                <form v-on:submit.prevent="onSubmit">
                     <Input v-model="search" name="search" type="text" placeholder="Search..." class="pl-10" />
                     <button type="submit" class="invisible"></button>
                 </form>

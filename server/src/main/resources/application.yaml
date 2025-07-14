@@ -1,6 +1,6 @@
 ktor:
     apiKeys:
-        githubSearchApiKey: $GITHUB_SEARCH_API_KEY
+        githubApiKey: $GITHUB_API_KEY
     application:
         modules:
             - controller.ApplicationKt.module

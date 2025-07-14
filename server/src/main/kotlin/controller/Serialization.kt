@@ -10,6 +10,7 @@ fun Application.configureSerialization() {
         json(Json { // Enable sending objects as JSON over HTTP
             prettyPrint = true
             isLenient = true
+            ignoreUnknownKeys = true
         })
     }
 }

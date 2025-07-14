@@ -1,4 +1,4 @@
-package model
+package model.content
 
 import kotlinx.serialization.Serializable
 

@@ -5,6 +5,7 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.runBlocking
+import model.githubApiKey
 
 // use existing textmate grammars + monaco to render text
 /*
@@ -21,7 +22,7 @@ val httpClient = HttpClient {
         logger = Logger.DEFAULT
         level = LogLevel.HEADERS
     }
-    expectSuccess = true
+    expectSuccess = false   // Prevent exceptions on 404/500
 }
 
 fun main(args: Array<String>) {
@@ -31,4 +32,5 @@ fun main(args: Array<String>) {
 fun Application.module() = runBlocking {
     configureSerialization()
     configureRouting()
+    githubApiKey = environment.config.property("ktor.apiKeys.githubApiKey").getString()
 }
