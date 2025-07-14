@@ -1,21 +1,16 @@
 package model.content
 
 import io.ktor.client.call.*
-import io.ktor.client.statement.bodyAsText
 import io.ktor.server.plugins.*
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import model.content
-import model.decodeJson
-import model.fileName
-import model.github
-import model.orResourceNotFound
-import model.parentDirectory
+import model.*
 import model.vcs.GitFileTree
 import model.vcs.Repository
 
@@ -41,7 +36,7 @@ data class DocumentConfiguration(
     val title: String = "Untitled Document",
     val icon: String = "",
     val favicon: String = "",
-    val contentRoot: String = "/",
+    val contentRoot: String = "",
     val contentGroups: Map<String, String> = emptyMap(),
 ) {
     private val document: Document? = null
@@ -86,20 +81,18 @@ data class DocumentConfiguration(
     private suspend fun contentDirectory(repo: Repository): ContentFile {
         val defaultBranch = github("repos/$repo")
             .orResourceNotFound { "Repository '$repo'" }
-            .bodyAsText()
-            .decodeJson()
+            .body<JsonObject>()
             .getValue("default_branch").jsonPrimitive.content
         val commit = github("repos/$repo/branches/$defaultBranch")
             .orResourceNotFound { "Tree SHA for branch '$defaultBranch' in repository '$repo'" }
-            .bodyAsText()
-            .decodeJson()
+            .body<JsonObject>()
             .getValue("commit").jsonObject
             .getValue("sha").jsonPrimitive.content
         val tree = github("repos/$repo/git/trees/$commit?recursive=1")
             .orResourceNotFound { "Git tree for branch '$defaultBranch' in repository '$repo'" }
             .body<GitFileTree>()
         // todo handle truncated tree
-        val root = ContentFile("<root>")
+        val root = ContentFile("")
         tree.nodes.asSequence()
             .groupBy { item -> item.path.parentDirectory() }
             .forEach { (parentDir, items) ->

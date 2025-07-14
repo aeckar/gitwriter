@@ -27,6 +27,7 @@ dependencies {  // todo configure CORS
     // Ktor server
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-content-negotiation")
+    implementation("io.ktor:ktor-server-call-logging")
     implementation("io.ktor:ktor-server-host-common")
     implementation("io.ktor:ktor-server-status-pages")
     implementation("io.ktor:ktor-server-resources")
@@ -36,14 +37,15 @@ dependencies {  // todo configure CORS
 
     // Ktor client
     implementation("io.ktor:ktor-client-core")
-    implementation("io.ktor:ktor-client-cio")
+    implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-client-logging")
-    implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("io.ktor:ktor-client-cio")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logbackVersion") // or from version catalog
 
     // Serialization
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("com.akuleshov7:ktoml-core:$ktomlVersion")
     implementation("com.akuleshov7:ktoml-file:$ktomlVersion")
 

@@ -12,10 +12,9 @@ const route = useRoute()
 
 const { user, repo } = route.params
 
-let page: string//todo
+let page: Page
 
 onMounted(async () => { // todo change from localhost on launch
-    console.log("Hello!")
     const response = await fetch(`http://localhost:8080/pages/${user}/${repo}/${route.params.page}`)
     if (!response.ok) {
         const error = useError()
@@ -23,7 +22,7 @@ onMounted(async () => { // todo change from localhost on launch
         error.description = response.statusText
         await router.push({ name: "/error" })
     }
-    page=await response.text()
+    page = await response.json()
 })
 </script>
 
@@ -34,7 +33,7 @@ onMounted(async () => { // todo change from localhost on launch
                 <AppIcon />
             </a>
             <div id="title">
-                {{ page }} page.site.title
+                {{ page.site.title }}
             </div>
             <a href="{{ content(user, repo) }}">
                 <GithubIcon/>

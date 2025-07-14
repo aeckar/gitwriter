@@ -1,14 +1,15 @@
 package model
 
-import controller.httpClient
+import controller.client
 import io.ktor.client.request.get
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.headers
 import io.ktor.server.plugins.*
 import io.ktor.utils.io.*
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.serializer
 import model.vcs.Repository
 
 private const val RAW_CONTENT_HOST = "https://raw.githubusercontent.com"
@@ -37,7 +38,8 @@ fun String.parentDirectory(): String {
 fun String.fileName() = substringAfterLast('/')
 
 /** Deserializes the JSON object contained by the string. */
-fun String.decodeJson() = Json.decodeFromString(JsonObject.serializer(), this)
+@OptIn(InternalSerializationApi::class)
+inline fun <reified T : Any> String.decodeJsonAs() = Json.decodeFromString(T::class.serializer(), this)
 
 /**
  * Returns the contents of the file at the given location, relative to the root directory
@@ -45,7 +47,7 @@ fun String.decodeJson() = Json.decodeFromString(JsonObject.serializer(), this)
  */
 suspend fun content(repo: Repository, path: String): ByteReadChannel? {
     val contentUrl = "$RAW_CONTENT_HOST/$repo/HEAD/$path"
-    val response = httpClient.get(contentUrl) {
+    val response = client.get(contentUrl) {
         headers { append(HttpHeaders.UserAgent, userAgent) }
     }
     return if (response.status.isSuccess()) response.bodyAsChannel() else null
@@ -58,7 +60,7 @@ suspend fun content(repo: Repository, path: String): ByteReadChannel? {
  * The request expects a response of a JSON object.
  */
 suspend fun github(endpoint: String): HttpResponse {
-    return httpClient.get("$GITHUB_API/$endpoint") {
+    return client.get("$GITHUB_API/$endpoint") {
         headers {
             append(HttpHeaders.Accept, "application/json")
             append(HttpHeaders.Authorization, "Bearer $githubApiKey")
