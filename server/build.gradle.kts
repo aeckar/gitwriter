@@ -52,4 +52,6 @@ dependencies {  // todo configure CORS
     // Testing
     testImplementation("io.ktor:ktor-server-test-host")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+
+    implementation("org.commonmark:commonmark:0.21.0")
 }

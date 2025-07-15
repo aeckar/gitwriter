@@ -1,5 +1,5 @@
 export type Page = {
-    site: Document
+    document: Document
     content: string
 }
 

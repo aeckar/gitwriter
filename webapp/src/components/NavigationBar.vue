@@ -1,6 +1,6 @@
 <template>
     <nav id="navbar">
-        <slot />
+        <slot/>
     </nav>
 </template>
 

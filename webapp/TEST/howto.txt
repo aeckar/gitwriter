@@ -20,3 +20,8 @@ npx shadcn-vue@latest init
 npx shadcn-vue@latest add <component>
 
 npm install lucide-vue-next
+
+Why does this work for href but NOT for style?
+Vue template compiler processes some attributes like href, title, and alt to support interpolation inside them as a convenience.
+
+But for complex attributes like style, class, or any dynamic binding, you need to use : binding syntax (v-bind:style) to properly handle objects, reactivity, and security.

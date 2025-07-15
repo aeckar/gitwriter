@@ -6,6 +6,7 @@ import { Search } from 'lucide-vue-next';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import PlaceholderBox from '@/components/PlaceholderBox.vue'
 
 useHead({
     title: 'GitWriter',
@@ -32,11 +33,12 @@ async function onSubmit() {
 
 <template>
     <div id="layout" class="col-format">
+        <PlaceholderBox color="gray" height="200" width="200"/>
         <div></div>
         <div class="col-format">
             <header class="col-format">
                 <div class="row-format">
-                    <AppIcon color="white"/>
+                    <AppIcon id="app-icon" height="60px" weight="60px" color="white"/>
                     <span id="title">GitWriter</span>
                     <div id="version" class="faded-text col-format">
                         beta
@@ -93,21 +95,22 @@ nav a:hover {
         font-size: 10pt;
     }
 
+    margin-left: 5px;
     font-weight: bold;
     font-size: 40pt;
 }
 
 #greeting {
-    padding-bottom: 30px;
+    margin-bottom: 30px;
     font-size: 12pt;
 }
 
 #version {
     div {
-        height: 45px;
+        height: 40px;
     }
 
-    padding-left: 5px;
+    margin-left:5px;
     font-size: 12pt;
 }
 </style>

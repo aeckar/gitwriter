@@ -8,6 +8,9 @@ import kotlinx.serialization.Serializable
 import model.content
 import model.orResourceNotFound
 import model.vcs.Repository
+import org.commonmark.node.Node
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -46,7 +49,15 @@ data class Document(
             return pages.getValue(path)
         }
         val file = content(repo, path.ifEmpty { homePath }).orResourceNotFound { "Page '$path'" }
-        val page = file.readRemaining().readText()  // TODO parser entry point
+        // TODO parser entry point
+        val txt = file.readRemaining().readText()
+        // Create parser and renderer
+        val parser: Parser = Parser.builder().build()
+        val document: Node = parser.parse(txt)
+
+        val renderer: HtmlRenderer = HtmlRenderer.builder().build()
+        val page = renderer.render(document)
+
         pages[path] = page
         return page
     }

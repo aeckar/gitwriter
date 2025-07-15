@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import { PencilRuler } from 'lucide-vue-next'
+import { shapeProps } from '@/lib/props.ts'
 
-defineProps(['color'])
+const { width, height, color } = defineProps(shapeProps)
 </script>
 
 <template>
-    <PencilRuler class="app-icon" :style="{ color }"/>
+    <PencilRuler :width="width" :height="height" :color="color"/>
 </template>
-
-<style scoped>
-.app-icon {
-    width: 60px;
-    height: 60px;
-}
-</style>
