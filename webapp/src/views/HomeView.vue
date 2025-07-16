@@ -1,12 +1,11 @@
 <script setup lang="ts">
-
 import { useHead } from '@vueuse/head'
 import AppIcon from "@/components/AppIcon.vue";
 import { Search } from 'lucide-vue-next';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import PlaceholderBox from '@/components/PlaceholderBox.vue'
+import HoverText from "@/components/text/HoverText.vue";
 
 useHead({
     title: 'GitWriter',
@@ -32,20 +31,18 @@ async function onSubmit() {
 </script>
 
 <template>
-    <div id="layout" class="col-format">
-        <PlaceholderBox color="gray" height="200" width="200"/>
-        <div></div>
-        <div class="col-format">
-            <header class="col-format">
-                <div class="row-format">
-                    <AppIcon id="app-icon" height="60px" weight="60px" color="white"/>
+    <div id="layout" class="flex-column">
+        <div id="main-content" class="flex-column">
+            <header class="flex-column">
+                <div class="flex-row">
+                    <AppIcon height="60px" width="60px" color="white"/>
                     <span id="title">GitWriter</span>
-                    <div id="version" class="faded-text col-format">
+                    <div id="version" class="faded-text flex-column">
                         beta
-                        <div></div>
+                        <div id="version-sup"></div>
                     </div>
                 </div>
-                <span id="greeting" class="faded-text">Share markup with ease!</span>
+                <span id="subtitle" class="faded-text">Share markup with ease!</span>
             </header>
             <div class="relative w-full max-w-sm items-center">
                 <form v-on:submit.prevent="onSubmit">
@@ -57,10 +54,19 @@ async function onSubmit() {
                 </span>
             </div>
         </div>
-        <footer class="faded-text footer-text col-format">
-            <nav class="row-format">
-                <a href="/about">about</a>|
-                <a href="https://github.com/aeckar/gitwriter/">source</a>
+        <footer id="footer" class="footer-text flex-column appender">
+            <nav id="navigation" class="flex-row">
+                <a href="/about" class="glow-on-hover">
+                    <HoverText color="white">
+                        about
+                    </HoverText>
+                </a>
+                |
+                <a href="https://github.com/aeckar/gitwriter/" class="glow-on-hover">
+                    <HoverText color="white">
+                        source
+                    </HoverText>
+                </a>
             </nav>
             &copy; Angel Eckardt 2025
         </footer>
@@ -68,49 +74,37 @@ async function onSubmit() {
 </template>
 
 <style scoped>
-nav, footer {
-    gap: 5px;
-}
-
-nav a:hover {
-    color: white;
-    transition: color 0.3s;
-}
-
 #layout {
+    #main-content {
+        #title {
+            margin-left: 5px;
+            font-weight: bold;
+            font-size: 40pt;
+        }
+        #version {
+            margin: 0 0 40px 5px;
+            font-size: 15pt;
+        }
+        #subtitle {
+            margin-bottom: 30px;
+            font-size: 12pt;
+        }
+        flex: 1;
+    }
+    #navigation, #footer {
+        gap: 5px;
+    }
+    #footer {
+        color: #aaaaaa;
+        font-family: monospace;
+        padding-top: 9px;
+        width: 100vw;
+    }
     justify-content: space-between;
-
-    /* color scheme */
     color: white;
-    background-color: #27282c;
-
-    /* position at center of page */
+    background-color: #17171a;
     position: absolute;
     height: 100vh;
     width: 100vw;
-}
-
-#title {
-    sup {
-        font-size: 10pt;
-    }
-
-    margin-left: 5px;
-    font-weight: bold;
-    font-size: 40pt;
-}
-
-#greeting {
-    margin-bottom: 30px;
-    font-size: 12pt;
-}
-
-#version {
-    div {
-        height: 40px;
-    }
-
-    margin-left:5px;
-    font-size: 12pt;
 }
 </style>

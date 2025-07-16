@@ -3,13 +3,13 @@ import { defineStore } from 'pinia'
 
 export function resetError() {
     const error = useError()
-    error.status = 404
-    error.description = "Not Found"
+    error.cause = "404: Not Found"
+    error.message = null
 }
 
 export const useError = defineStore('error', () => {
-    const status = ref(0)
-    const description = ref('')
+    const cause = ref('')
+    const message = ref<string | null>(null)
 
-    return { status, description }
+    return { cause, message }
 })

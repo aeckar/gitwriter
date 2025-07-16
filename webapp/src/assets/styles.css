@@ -1,30 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* ==============================[ global stylesheets ]============================== */
 
-.navbar-item {
-    padding: 10px 10px;
-    color: white;
-    cursor: pointer;
-    user-select: none;
-}
-
-html, body {
+:root {
     height: 100%;
     margin: 0;
-    font-family: "Roboto", sans-serif;
 }
 
-.col-format {
+.flex-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.row-format {
+.flex-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -36,14 +27,33 @@ html, body {
     font-family: monospace;
 }
 
-.invisible {
-    display: none;
-}
-
 .footer-text {
     font-size: 10pt;
     padding-bottom: 10px;
 }
+
+.invisible {
+    display: none;
+}
+
+.appender { /* header or footer */
+    background:
+        linear-gradient(to bottom, #3b3c40, #27282c) top,
+        linear-gradient(to top, #27282c, #131418) bottom,
+        #27282c;
+}
+
+.inline-code {
+
+}
+
+.code-block {
+
+}
+
+/* ==============================[ shadcn/vue stylesheets ]============================== */
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
     --color-background: var(--background);

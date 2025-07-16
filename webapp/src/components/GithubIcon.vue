@@ -1,7 +1,19 @@
 <script setup lang="ts">
-import { shapeProps } from '@/lib/props.ts'
-
-defineProps(shapeProps)
+defineProps({
+        width: {
+            type: String,
+            required: true
+        },
+        height: {
+            type: String,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        }
+    }
+)
 </script>
 
 <template>

@@ -1,8 +1,21 @@
 <script setup lang="ts">
 import { PencilRuler } from 'lucide-vue-next'
-import { shapeProps } from '@/lib/props.ts'
 
-const { width, height, color } = defineProps(shapeProps)
+const { width, height, color } = defineProps({
+        width: {
+            type: String,
+            required: true
+        },
+        height: {
+            type: String,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        }
+    }
+)
 </script>
 
 <template>
