@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { width, height } = defineProps({
+import type { PropType } from 'vue'
+
+const { width, height, pulse } = defineProps({
     width: {
         type: String,
         required: true
@@ -7,13 +9,19 @@ const { width, height } = defineProps({
     height: {
         type: String,
         required: true
+    },
+    pulse: {
+        type: Object as PropType<string[]>,
+        required: true
     }
 })
-// todo fix
 </script>
 
 <template>
-    <div class="placeholder-box pulsate shimmer" :style="{ width, height }"></div>
+    <div
+        class="placeholder-box pulsate shimmer"
+        :style="{ width, height, '--pulse-to': pulse[0], '--pulse-from': pulse[1] }"
+    ></div>
 </template>
 
 <!--suppress RequiredAttributes -->
@@ -23,7 +31,7 @@ const { width, height } = defineProps({
 }
 
 .pulsate {
-    animation-name: color;
+    animation-name: pulsate;
     animation-duration: 0.3s;
     animation-iteration-count: infinite;
     animation-direction: alternate-reverse;
@@ -44,25 +52,17 @@ const { width, height } = defineProps({
     width: 150%;
     background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.4) 50%, transparent 80%);
     background-size: 120%;
-    animation: shimmer-swipe 2s infinite;
+    animation: shimmer 2s infinite;
     animation-delay: 0s;
 }
 
-@keyframes shimmer-swipe {
-    0% {
-        left: -300%;
-    }
-    100% {
-        left: 300%;
-    }
+@keyframes pulsate {
+    to { background-color: var(--pulse-to); }
+    from { background-color: var(--pulse-from); }
 }
 
-@keyframes color {
-    to {
-        background-color: #636468;
-    }
-    from {
-        background-color: #4f5054;
-    }
+@keyframes shimmer {
+    to { left: 300%; }
+    from { left: -300%; }
 }
 </style>

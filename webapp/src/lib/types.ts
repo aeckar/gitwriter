@@ -1,25 +1,25 @@
 export type Page = {
-    document: Document
-    content: string
+    readonly document: Document
+    readonly content: string
 }
 
 type Document = {
-    title: string
-    icon: string
-    favicon: string
-    contentRoot: string
-    contentGroups: Map<String, String>
-    repo: Repository
-    homePath: string
-    contentDirectory: File
+    readonly title: string
+    readonly icon: string
+    readonly favicon: string
+    readonly contentRoot: string
+    readonly contentGroups: Map<String, String>
+    readonly repo: Repository
+    readonly homePath: string
+    readonly contentDirectory: File
 }
 
 type File = {
-    name: string
-    children: Array<File | string>
+    readonly name: string
+    readonly children: Array<File | string>
 }
 
 type Repository = {
-    owner: string
-    name: string
+    readonly owner: string
+    readonly name: string
 }

@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import "tw-animate-css";
 
-/* ==============================[ global stylesheets ]============================== */
+/* ------------------------------ global stylesheets ------------------------------ */
 
 :root {
     height: 100%;
@@ -22,14 +22,14 @@
     align-items: center;
 }
 
-.faded-text {
+.faded {
     color: dimgrey;
     font-family: monospace;
 }
 
 .footer-text {
     font-size: 10pt;
-    padding-bottom: 10px;
+    padding-bottom: 0.8rem;
 }
 
 .invisible {
@@ -41,6 +41,18 @@
         linear-gradient(to bottom, #3b3c40, #27282c) top,
         linear-gradient(to top, #27282c, #131418) bottom,
         #27282c;
+    box-shadow: 0 0 1rem black;
+}
+
+.page-layout {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.glow-white:hover {
+    color: white;
+    transition: color 0.3s;
 }
 
 .inline-code {
@@ -51,7 +63,7 @@
 
 }
 
-/* ==============================[ shadcn/vue stylesheets ]============================== */
+/* ------------------------------ shadcn/vue stylesheets ------------------------------ */
 
 @custom-variant dark (&:is(.dark *));
 

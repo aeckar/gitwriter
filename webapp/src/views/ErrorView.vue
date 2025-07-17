@@ -1,33 +1,27 @@
 <script setup lang="ts">
-import { resetError, useError } from '@/stores/stores.ts'
+import { useError } from '@/stores/stores.ts'
 import { onUnmounted } from 'vue'
-import CodeBlock from '@/components/text/CodeBlock.vue'
-import HoverText from '@/components/text/HoverText.vue'
 
-const { cause, message } = useError()
+const { status, statusText } = useError()
 
 onUnmounted(() => {
-    resetError()
+    const err = useError()
+    err.status = 404
+    err.statusText = "Not found"
 })
 </script>
 
 <template>
-    <div id="layout" class="flex-column">
-        {{ cause }}
-        <div id="message" v-if="message">
-            <CodeBlock>{{ message }}</CodeBlock>
-        </div>
-        <HoverText color="white">
-            <a href="/" id="home-link" class="faded-text"> return to homepage </a>
-        </HoverText>
+    <div class="flex-column page-layout">
+        {{ status }}: {{ statusText }}
+        <a href="/" class="faded home-link">
+            <span class="glow-white">return to homepage</span>
+        </a>
     </div>
 </template>
 
 <style scoped>
-#layout {
-    #home-link {
-        font-size: 20pt;
-    }
+.page-layout {
     font-weight: bold;
     font-size: 40pt;
     color: white;
@@ -35,6 +29,10 @@ onUnmounted(() => {
     position: absolute;
     height: 100vh;
     width: 100vw;
-    gap: 50px;
+    overflow: hidden;
+}
+
+.home-link {
+    font-size: 20pt;
 }
 </style>
