@@ -91,7 +91,7 @@ data class DocumentConfiguration(
         val tree = github("repos/$repo/git/trees/$commit?recursive=1")
             .orResourceNotFound { "Git tree for branch '$defaultBranch' in repository '$repo'" }
             .body<GitFileTree>()
-        // todo handle truncated tree
+        // It is possible, but extremely unlikely, that the tree is truncated (>1000 entries)
         val root = ContentFile("")
         tree.nodes.asSequence()
             .groupBy { item -> item.path.parentDirectory() }

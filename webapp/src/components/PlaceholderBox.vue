@@ -15,19 +15,20 @@ const { width, height, pulse } = defineProps({
         required: true
     }
 })
+
+const [to, from] = pulse
 </script>
 
 <template>
-    <div
-        class="placeholder-box pulsate shimmer"
-        :style="{ width, height, '--pulse-to': pulse[0], '--pulse-from': pulse[1] }"
-    ></div>
+    <div class="placeholder-box pulsate shimmer"></div>
 </template>
 
 <!--suppress RequiredAttributes -->
 <style>
 .placeholder-box {
     border-radius: 10px;
+    width: v-bind(width);
+    height: v-bind(height);
 }
 
 .pulsate {
@@ -57,8 +58,8 @@ const { width, height, pulse } = defineProps({
 }
 
 @keyframes pulsate {
-    to { background-color: var(--pulse-to); }
-    from { background-color: var(--pulse-from); }
+    to { background-color: v-bind(to); }
+    from { background-color: v-bind(from); }
 }
 
 @keyframes shimmer {

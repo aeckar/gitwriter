@@ -9,9 +9,9 @@
         }
     ],
     "compilerOptions": {
-        "baseUrl": ".", // Required by shadcn/vue
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"] // Required by shadcn/vue
+            "@/*": ["./src/*"]
         }
     }
 }

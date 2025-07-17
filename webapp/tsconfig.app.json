@@ -7,6 +7,6 @@
         "paths": {
             "@/*": ["./src/*"]
         },
-        "baseUrl": "." // Required by shadcn/vue
+        "baseUrl": "."
     }
 }

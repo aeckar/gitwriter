@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useHead } from '@vueuse/head'
 import AppIcon from "@/components/AppIcon.vue";
-import { Search } from 'lucide-vue-next';
-import { Input } from '@/components/ui/input';
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
@@ -30,41 +28,47 @@ async function onSubmit() {
 </script>
 
 <template>
-    <div class="flex-column page-layout">
-        <div class="flex-column main-content">
-            <header class="flex-column">
-                <div class="flex-row">
-                    <AppIcon height="60px" width="60px" color="white"/>
-                    <span class="title">GitWriter</span>
-                    <span class="faded version">beta</span>
-                </div>
-                <span class="faded subtitle">Share markup with ease!</span>
-            </header>
-            <div class="relative w-full max-w-sm items-center">
-                <form v-on:submit.prevent="onSubmit">
-                    <Input v-model="search" name="search" type="text" placeholder="Search..." class="pl-10" />
-                    <button type="submit" class="invisible"></button>
-                </form>
-                <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-                    <Search class="size-6 text-muted-foreground" color="white"/>
-                </span>
+<div class="flex-col page">
+    <div class="flex-col main-content">
+        <header class="flex-col">
+            <div class="flex-row">
+                <AppIcon height="60px" width="60px" color="white"/>
+                <span class="title">GitWriter</span>
+                <span class="faded version">beta</span>
             </div>
+            <span class="faded subtitle">Share markup with ease!</span>
+        </header>
+        <div class="flex-row">
+            <form v-on:submit.prevent="onSubmit">
+                <v-text-field
+                    width="400px"
+                    class="search-bar"
+                    v-model="search"
+                    label="Search Repositories"
+                    prepend-inner-icon="mdi-magnify"
+                    clearable
+                    variant="outlined"
+                />
+                <button type="submit" class="invisible"></button>
+            </form>
+
         </div>
-        <footer class="footer footer-text flex-column appender">
-            <nav class="flex-row navigation">
-                <a href="/about" class="glow-white">about</a>
-                |
-                <a href="https://github.com/aeckar/gitwriter/" class="glow-white">source</a>
-            </nav>
-            &copy; Angel Eckardt 2025
-        </footer>
     </div>
+    <footer class="footer fine flex-col v-bar">
+        <nav class="flex-row navbar">
+            <a href="/about" class="glow-white">about</a>
+            |
+            <a href="https://github.com/aeckar/gitwriter/" class="glow-white">source</a>
+        </nav>
+        &copy; Angel Eckardt 2025
+    </footer>
+</div>
 </template>
 
 <style scoped>
 /* Guide: Use 'rem' for elements relative to font size, otherwise use % */
 
-.page-layout {
+.page {
     color: white;
     background-color: #17171a;
 }
@@ -89,7 +93,7 @@ async function onSubmit() {
     font-size: 12pt;
 }
 
-.navigation, .footer {
+.navbar, .footer {
     gap: 0.5rem;
 }
 

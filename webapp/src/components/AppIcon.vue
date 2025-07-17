@@ -19,5 +19,5 @@ const { width, height, color } = defineProps({
 </script>
 
 <template>
-    <PencilRuler :width="width" :height="height" :color="color"/>
+<PencilRuler :width="width" :height="height" :color="color"/>
 </template>

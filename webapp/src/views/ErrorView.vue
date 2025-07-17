@@ -5,23 +5,23 @@ import { onUnmounted } from 'vue'
 const { status, statusText } = useError()
 
 onUnmounted(() => {
-    const err = useError()
-    err.status = 404
-    err.statusText = "Not found"
+    const error = useError()
+    error.status = 404
+    error.statusText = "Not found"
 })
 </script>
 
 <template>
-    <div class="flex-column page-layout">
-        {{ status }}: {{ statusText }}
-        <a href="/" class="faded home-link">
-            <span class="glow-white">return to homepage</span>
-        </a>
-    </div>
+<div class="flex-col page">
+    {{ status }}: {{ statusText }}
+    <a href="/" class="faded home-link">
+        <span class="glow-white">return to homepage</span>
+    </a>
+</div>
 </template>
 
 <style scoped>
-.page-layout {
+.page {
     font-weight: bold;
     font-size: 40pt;
     color: white;

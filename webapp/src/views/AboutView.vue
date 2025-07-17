@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div>TODO</div>
+<div>TODO</div>
 </template>
 
 <style scoped>
