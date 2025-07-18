@@ -54,7 +54,7 @@ async function onSubmit() {
 
         </div>
     </div>
-    <footer class="footer fine flex-col v-bar">
+    <footer class="footer faded fine flex-col v-bar">
         <nav class="flex-row navbar">
             <a href="/about" class="glow-white">about</a>
             |
@@ -66,11 +66,11 @@ async function onSubmit() {
 </template>
 
 <style scoped>
-/* Guide: Use 'rem' for elements relative to font size, otherwise use % */
+/* Guide: Use 'em' for elements relative to font size, otherwise use % */
 
 .page {
     color: white;
-    background-color: #17171a;
+    background-color: var(--backdrop-color);
 }
 
 .main-content {
@@ -78,29 +78,26 @@ async function onSubmit() {
 }
 
 .title {
-    margin-left: 0.5rem;    /* away from logo */
+    margin-left: 0.2em;    /* away from logo */
     font-weight: bold;
-    font-size: 40pt;
+    font-size: 4em;
 }
 
 .version {
-    margin: 0 0 1.8rem 0.5rem;  /* superscript, away from title */
-    font-size: 15pt;
+    margin: 0 0 1.8em 0.5em;  /* superscript, away from title */
+    font-size: 1.5em;
 }
 
 .subtitle {
     margin-bottom: 10%;    /* away from search bar */
-    font-size: 12pt;
+    font-size: 1.2em;
 }
 
 .navbar, .footer {
-    gap: 0.5rem;
+    gap: 0.5em;
 }
 
 .footer {
-    color: #aaaaaa;
-    font-family: monospace;
-    padding-top: 0.8rem;   /* equalize top, bottom padding */
-    width: 100vw;
+    padding-top: 0.8em;   /* equalize top, bottom padding */
 }
 </style>

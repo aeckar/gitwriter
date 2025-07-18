@@ -23,9 +23,9 @@ onUnmounted(() => {
 <style scoped>
 .page {
     font-weight: bold;
-    font-size: 40pt;
+    font-size: 4em;
     color: white;
-    background-color: #17171a;
+    background-color: var(--backdrop-color);
     position: absolute;
     height: 100vh;
     width: 100vw;
@@ -33,6 +33,6 @@ onUnmounted(() => {
 }
 
 .home-link {
-    font-size: 20pt;
+    font-size: 0.3em;
 }
 </style>

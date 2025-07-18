@@ -12,6 +12,9 @@ import { RouterView } from 'vue-router'
 html, body {
     height: 100%;
     margin: 0;
+    overflow-y: auto;   /* https://stackoverflow.com/q/77665793 */
+
+    --backdrop-color: #17171a
 }
 
 a {
@@ -52,12 +55,13 @@ a {
         linear-gradient(to top, #27282c, #131418) bottom,
         #27282c;
     box-shadow: 0 0 1rem black;
+    width: 100vw;
 }
 
 /* ------------------------------ text formatting ------------------------------ */
 
 .faded {
-    color: dimgrey;
+    color: #aaaaaa;
     font-family: monospace;
 }
 

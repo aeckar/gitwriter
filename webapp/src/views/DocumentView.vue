@@ -33,27 +33,27 @@ useHead({   // todo for icon and favicon, send raw github image urls, ((do this 
     ]
 })
 
-// onMounted(async () => {
-//     let response: Response
-//     const serverUrl = `http://localhost:8080/pages/${user}/${repo}/${route.params.page}`    // todo remove localhost
-//     try {
-//         const timeout = setTimeout(() => {
-//             throw new Error("Request timed out")
-//         }, 15000)
-//         response = await fetch(serverUrl)
-//         clearTimeout(timeout)
-//     } catch (err) {
-//         alert(`Network error: Failed to connect to server. Please try again later.`)
-//         throw err
-//     }
-//     if (!response.ok) {
-//         error.status = response.status
-//         error.statusText = response.statusText
-//         await router.push({ name: "error" })
-//         return
-//     }
-//     page.value = await response.json()
-// })
+onMounted(async () => {
+    let response: Response
+    const serverUrl = `http://localhost:8080/pages/${user}/${repo}/${route.params.page}`    // todo remove localhost
+    try {
+        const timeout = setTimeout(() => {
+            throw new Error("Request timed out")
+        }, 15000)
+        response = await fetch(serverUrl)
+        clearTimeout(timeout)
+    } catch (err) {
+        alert(`Network error: Failed to connect to server. Please try again later.`)
+        throw err
+    }
+    if (!response.ok) {
+        error.status = response.status
+        error.statusText = response.statusText
+        await router.push({ name: "error" })
+        return
+    }
+    page.value = await response.json()
+})
 
 const navbarPulse = ["#636468", "#4f5054"]
 const contentPulse = ["#eff0f4", "#dbdce0"]
@@ -64,12 +64,12 @@ const contentPulse = ["#eff0f4", "#dbdce0"]
 <div class="page">
     <nav class="flex-row navbar v-bar">
         <div class="flex-row">
-            <a v-if="page" class="doc-icon" :href="`/pages/${user}/${repo}/`">
+            <a v-if="page" class="title-icon" :href="`/pages/${user}/${repo}/`">
                 <AppIcon width="40px" height="40px" color="white"/><!-- todo replace with icon -->
             </a>
             <!-- This placeholder might not be accurate if user agent font size is changed,
                  but since actual sizes vary depending on font, this is good enough. -->
-            <PlaceholderBox v-else class="doc-icon" width="40px" height="40px" :pulse="navbarPulse"/>
+            <PlaceholderBox v-else class="title-icon" width="40px" height="40px" :pulse="navbarPulse"/>
             <div class="title">
                 <h1 v-if="page">{{ page.document.title }}</h1>
                 <PlaceholderBox v-else width="250px" height="40px" :pulse="navbarPulse"/>
@@ -80,12 +80,12 @@ const contentPulse = ["#eff0f4", "#dbdce0"]
         </a>
         <PlaceholderBox v-else class="github-icon" width="40px" height="40px" :pulse="navbarPulse"/>
     </nav>
-    <div v-if="page" class="flex-row document content">
-        <div class="content-directory">
+    <div v-if="page" class="flex-row doc">
+        <div class="doc-dir">
 
         </div>
-        <div class="flex-col content-body" style="color:black; font-size: 40pt;">
-            <main v-html="page.content" class="content-text"></main>
+        <div class="flex-col doc-body" style="color:black; font-size: 40pt;">
+            <main v-html="page.content" class="doc-text"></main>
             <footer class="footer faded fine">
                 Generated using GitWriter &copy; Angel Eckardt 2025
             </footer>
@@ -127,18 +127,17 @@ const contentPulse = ["#eff0f4", "#dbdce0"]
 .navbar {
     position: absolute;
     top: 0;
-    width: 100vw;
     height: var(--navbar-height);
     justify-content: space-between;
 }
 
-.doc-icon {
+.title-icon {
     margin: 10px 0 10px 80px;
 }
 
 .title {
     margin-left: 15px;
-    font-size: 20pt;
+    font-size: 16pt;
     color: white;
     font-weight: bold;
 }
@@ -180,53 +179,101 @@ const contentPulse = ["#eff0f4", "#dbdce0"]
 
 /* ------------------------------ document styles ------------------------------ */
 
-.document {
-    margin-top: 3%;
-    height: 96%;
-    scroll-padding-top: 50px;
-    overflow: scroll;
+.doc {
+    margin-top: var(--navbar-height);
+    height: calc(100vh - var(--navbar-height));
+    overflow-y: scroll;
 }
 
-.content-body {
+.doc-body {
     width: 50%;
-    height: 900px;
+    height: max-content;
 }
 
-.content-directory {
-
-}
-
-.content-text {
-    font-size: 12pt;
-}
-
-:deep(.content-text ul) {
-    list-style-type: circle !important;
+.doc-dir {
 
 }
 
-:deep(.content-text a) {
+.doc-text {
+    padding-top: 150%;
+    font-size: 0.3em;
+}
+
+:deep(.doc-text ul) {
+    list-style-type: disc;
+    padding: 1em 0 1em 2em;
+
+}
+
+:deep(.doc-text a) {
     color: dodgerblue;
-
 }
 
-:deep(.content-text h1) {
-    font-size: 24pt;
+:deep(.doc-text h1), :deep(.doc-text h2) {
+    border-bottom: 2px solid black;
+    padding-bottom: 0.1em;
+    margin-bottom: 1em;
 }
 
-:deep(.content-text a:hover) {
+:deep(.doc-text h1) {
+    padding-top: 1.5em;
+    font-size: 2.1em;
+}
+
+:deep(.doc-text h2) {
+    padding-top: 1em;
+    font-size: 1.5em;
+}
+
+:deep(.doc-text h3) {
+    padding-top: 0.5em;
+    font-size: 1.2em;
+}
+
+:deep(.doc-text h4) {
+    padding-top: 0.5em;
+    font-size: 1em;
+}
+
+:deep(.doc-text h5) {
+    padding-top: 0.5em;
+    font-size: 0.8em;
+}
+
+:deep(pre) {
+    background-color: #f6f8fa;      /* light gray background */
+    padding: 1em;                   /* space inside the block */
+    border-radius: 6px;             /* rounded corners */
+    overflow: auto;                 /* scroll if content overflows */
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+    border: 1px solid #d0d7de;      /* subtle border */
+    margin: 1em 0;
+}/* todo tweak from gpt */
+
+:deep(code) {
+    font-family: inherit;
+    background: none;
+    padding: 0;
+    color: inherit;
+}/* todo tweak from gpt */
+
+:deep(.doc-text h6) {
+    padding-top: 0.5em;
+    font-size: 0.5em;
+}
+
+:deep(.doc-text a:hover) {
     text-decoration: dodgerblue underline; /* todo animate right */
+    text-decoration-thickness: 2px;
 }
 
-:deep(.content-text li::marker) {
-    content: "- " !important;
-}
-
-:deep(.content-text a:active) {
+:deep(.doc-text a:active) {
     color: dodgerblue;
 }
 
-.content .sections {
+.doc .sections {
 
 }
 </style>
