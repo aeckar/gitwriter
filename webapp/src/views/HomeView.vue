@@ -28,49 +28,72 @@ async function onSubmit() {
 </script>
 
 <template>
-<div class="flex-col page">
-    <div class="flex-col page-content">
-        <header class="flex-col">
-            <div class="flex-row">
+<div class="display-col layout">
+    <div class="display-col page-content">
+        <header class="display-col">
+            <div class="display-row">
                 <AppIcon height="60px" width="60px" color="white"/>
                 <span class="title">GitWriter</span>
-                <span class="faded version">beta</span>
+                <span class="text-fade text-mono version">beta</span>
             </div>
-            <span class="faded subtitle">Share markup with ease!</span>
+            <span class="text-fade text-mono subtitle">Share markup with ease!</span>
         </header>
-        <div class="flex-row">
+        <div class="display-row">
             <form @submit.prevent="onSubmit">
-                <v-text-field
-                    width="400px"
+                <!-- https://vuetifyjs.com/en/api/v-text-field/#props -->
+                <VTextField
+                    width="30vw"
+                    min-width="400px"
                     class="search-bar"
                     v-model="search"
                     label="Search Repositories"
                     prepend-inner-icon="mdi-magnify"
                     clearable
-                    variant="outlined"
+                    variant="filled"
                 />
-                <button type="submit" class="invisible"></button>
+                <button type="submit" v-show="false"></button>
             </form>
-
         </div>
     </div>
-    <footer class="footer faded fine flex-col v-bar">
-        <nav class="flex-row navbar">
-            <a href="/about" class="glow-white">about</a>
+    <footer class="footer text-fade text-fine text-mono display-col bar">
+        <nav class="display-row navbar">
+            <a href="/about" class="text-glow-white">about</a>
             |
-            <a href="https://github.com/aeckar/gitwriter/" class="glow-white">source</a>
+            <a href="https://github.com/aeckar/gitwriter/" class="text-glow-white">source</a>
         </nav>
         &copy; Angel Eckardt 2025
     </footer>
 </div>
+    <!-- todo get rid of highlight on autocomplete, -->
+    <!-- todo remove later -->
+    <div id="related" class="display-col">
+        Popular Sites
+        <ul>
+            <li><a class="text-fade text-glow-white" href="/pages/aeckar/index-md-sample">aeckar/index-md-sample</a></li>
+            <li><a class="text-fade text-glow-white" href="/pages/aeckar/gitwriter-sample">aeckar/gitwriter-sample</a></li>
+            <li><a class="text-fade text-glow-white" href="/pages/aeckar/site-toml">aeckar/site-toml</a></li>
+        </ul>
+
+    </div>
 </template>
 
 <style scoped>
-/* Guide: Use 'em' for elements relative to font size, otherwise use % */
 
-.page {
+
+/* todo remove */
+#related {
+    position: absolute;
+    top: 25vh;
+    left: 75vw;
+    width: 300px;
+    height: 400px;
+    background-color: var(--bg-dark);
+    justify-content: space-evenly;
     color: white;
-    background-color: var(--backdrop-color);
+
+    /* https://kovart.github.io/dashed-border-generator/ */
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='50' ry='50' stroke='%23F6F8FAFF' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 50px;
 }
 
 .page-content {
@@ -93,11 +116,15 @@ async function onSubmit() {
     font-size: 1.2em;
 }
 
+.v-field {
+    border-radius: 50px !important;
+}
+
 .navbar, .footer {
     gap: 0.5em;
 }
 
 .footer {
-    padding-top: 0.8em;   /* equalize top, bottom padding */
+    padding: 0.8em 0 0.8em 0;
 }
 </style>

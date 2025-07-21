@@ -55,15 +55,15 @@ onMounted(async () => {
     page.value = await response.json()
 })
 
-const navbarPulse: Pulse = { to: "#636468", from: "#4f5054" }
-const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
+const navbarPulse: Pulse = { mid: "#636468", faint: "#4f5054" }
+const contentPulse: Pulse = { mid: "#eff0f4", faint: "#dbdce0" }
 </script>
 
 <template>
 <!-- Guide: Components requiring server data must show as placeholder by using 'v-if="page"' -->
-<div class="page">
-    <nav class="flex-row navbar v-bar">
-        <div class="flex-row">
+<div class="layout">
+    <nav class="display-row navbar bar">
+        <div class="display-row">
             <a v-if="page" class="title-icon" :href="`/pages/${user}/${repo}/`">
                 <AppIcon width="40px" height="40px" color="white"/><!-- todo replace with icon -->
             </a>
@@ -80,13 +80,13 @@ const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
         </a>
         <PlaceholderBox v-else class="github-icon" width="40px" height="40px" :pulse="navbarPulse"/>
     </nav>
-    <div v-if="page" class="flex-row doc">
+    <div v-if="page" class="display-row doc">
         <div class="doc-dir">
 
         </div>
-        <div class="flex-col doc-body" style="color:black; font-size: 40pt;">
+        <div class="display-col doc-body" style="color:black; font-size: 40pt;">
             <main v-html="page.content" class="doc-text"></main>
-            <footer class="footer faded fine">
+            <footer class="footer text-fade text-fine text-mono">
                 Generated using GitWriter &copy; Angel Eckardt 2025
             </footer>
         </div>
@@ -94,23 +94,25 @@ const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
 
         </div>
     </div>
-    <div v-else class="flex-row load">
-        <PlaceholderBox class="load-dir" :pulse="contentPulse" height="80%" width="var(--load-sidebar-width)"/>
-        <div class="load-body flex-col">
-            <PlaceholderBox class="load-crumbs" :pulse="contentPulse" height="40px" width="var(--load-crumbs-width)"/>
-            <PlaceholderBox class="load-text" height="0" width="80%" :pulse="contentPulse"/>
-            <footer class="footer faded fine">
-                Generated using GitWriter &copy; Angel Eckardt 2025
-            </footer>
-        </div>
-        <PlaceholderBox class="load-sections" :pulse="contentPulse" height="40%" width="var(--load-sidebar-width)"/>
+    <div v-else class="display-grid load">
+        <div class="crumbs-pad-left"></div>
+        <PlaceholderBox class="load-crumbs" :pulse="contentPulse" height="40px" width="var(--load-crumbs-width)"/>
+        <div class="crumbs-pad-right"></div>
+        <PlaceholderBox class="load-dir" :pulse="contentPulse" height="100%" width="var(--load-sidebar-width)"/>
+        <PlaceholderBox class="load-text" height="100%" width="80%" :pulse="contentPulse"/>
+        <PlaceholderBox class="load-sections" :pulse="contentPulse" height="50%" width="var(--load-sidebar-width)"/>
+        <footer class="load-footer text-fade text-fine text-mono">
+            Generated using GitWriter &copy; Angel Eckardt 2025
+        </footer>
     </div>
 </div>
 </template>
 
 <style scoped>
-.page {
-    --load-sidebar-width: 20%;
+.layout {
+    background-color: white;        /* todo adjust for light/dark mode */
+
+    --load-sidebar-width: 80%;
     --load-crumbs-width: 40%;
     --load-crumbs-margin: 3%;
     --load-sidebar-offset: 6%;
@@ -129,6 +131,7 @@ const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
     top: 0;
     height: var(--navbar-height);
     justify-content: space-between;
+    padding: 0;
 }
 
 .title-icon {
@@ -150,32 +153,35 @@ const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
 
 .load {
     margin-top: var(--navbar-height);
-    align-items: flex-start;
     height: calc(100vh - var(--navbar-height));
-    justify-content: center;
+    grid-template-rows: 1fr 10fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 
 .load-dir {
-    margin-top: var(--load-sidebar-offset);
-}
-
-.load-body {
-    height: calc(100vh - var(--navbar-height));
-    width: 50%;
-    justify-content: space-around;
+    align-self: start;
+    justify-self: end;
 }
 
 .load-crumbs {
+    grid-column: 2;
     margin: var(--load-crumbs-margin) var(--load-crumbs-width) var(--load-crumbs-margin) 0;
 }
 
-.load-sections {
-    margin-top: var(--load-sidebar-offset);
+.load-text {
+    align-self: start;
 }
 
-.load-text {
-    flex: 0.95;
+.load-sections {
+    align-self: start;
+    justify-self: start;
 }
+
+.load-footer {
+    grid-column: 1 / 4;
+}
+
+/* todo revamp loading screen with look similar to final text/dir/crumbs/sections render */
 
 /* ------------------------------ document styles ------------------------------ */
 
@@ -186,6 +192,7 @@ const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
 }
 
 .doc-body {
+
     width: 50%;
     height: max-content;
 }

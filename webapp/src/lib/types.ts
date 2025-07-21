@@ -4,8 +4,8 @@ export type Page = {
 }
 
 export type Pulse = {
-    readonly to: string,
-    readonly from: string
+    readonly mid: string,
+    readonly faint: string
 }
 
 type Document = {

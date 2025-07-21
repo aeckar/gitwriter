@@ -17,7 +17,7 @@ const { width, height, pulse } = defineProps({
     }
 })
 
-const { to, from } = pulse
+const { mid: toColor, faint: fromColor } = pulse
 </script>
 
 <template>
@@ -30,6 +30,7 @@ const { to, from } = pulse
     border-radius: 10px;
     width: v-bind(width);
     height: v-bind(height);
+
 }
 
 .pulsate {
@@ -59,12 +60,22 @@ const { to, from } = pulse
 }
 
 @keyframes pulsate {
-    to { background-color: v-bind(to); }
-    from { background-color: v-bind(from); }
+    to {
+        background-color: v-bind(toColor);
+        box-shadow: var(--shadow-blur) var(--shadow-blur) var(--shadow-blur) var(--black-faint);
+    }
+    from {
+        background-color: v-bind(fromColor);
+        box-shadow: var(--shadow-blur) var(--shadow-blur) var(--shadow-blur) var(--black-semi);
+    }
 }
 
 @keyframes shimmer {
-    to { left: 300%; }
-    from { left: -300%; }
+    to {
+        left: 300%;
+    }
+    from {
+        left: -300%;
+    }
 }
 </style>

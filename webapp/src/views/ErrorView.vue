@@ -12,24 +12,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-<div class="flex-col page">
+<div class="display-col layout">
     {{ status }}: {{ statusText }}
-    <a href="/" class="faded home-link">
-        <span class="glow-white">return to homepage</span>
+    <a href="/" class="text-fade text-mono home-link">
+        <span class="text-glow-white">return to homepage</span>
     </a>
 </div>
 </template>
 
 <style scoped>
-.page {
-    font-weight: bold;
+.layout {
     font-size: 4em;
-    color: white;
-    background-color: var(--backdrop-color);
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+    font-weight: bold;
 }
 
 .home-link {
