@@ -3,6 +3,11 @@ export type Page = {
     readonly content: string
 }
 
+export type Pulse = {
+    readonly to: string,
+    readonly from: string
+}
+
 type Document = {
     readonly title: string
     readonly icon: string

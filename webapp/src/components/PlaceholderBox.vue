@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
+import type { Pulse } from '@/lib/types.ts'
 
 const { width, height, pulse } = defineProps({
     width: {
@@ -11,12 +12,12 @@ const { width, height, pulse } = defineProps({
         required: true
     },
     pulse: {
-        type: Object as PropType<string[]>,
+        type: Object as PropType<Pulse>,
         required: true
     }
 })
 
-const [to, from] = pulse
+const { to, from } = pulse
 </script>
 
 <template>

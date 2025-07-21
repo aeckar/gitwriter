@@ -12,8 +12,8 @@ import { RouterView } from 'vue-router'
 html, body {
     height: 100%;
     margin: 0;
-    overflow-y: auto;   /* https://stackoverflow.com/q/77665793 */
-
+    overflow-y: auto !important;    /* https://stackoverflow.com/q/77665793 */
+    overflow-x: hidden;
     --backdrop-color: #17171a
 }
 

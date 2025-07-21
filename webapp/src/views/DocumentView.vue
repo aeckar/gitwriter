@@ -4,7 +4,7 @@ import { useError } from '@/stores/stores.ts'
 import GithubIcon from '@/components/GithubIcon.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, ref } from 'vue'
-import type { Page } from '@/lib/types.ts'
+import { type Page, type Pulse } from '@/lib/types.ts'
 import { useHead } from '@vueuse/head'
 import PlaceholderBox from '@/components/PlaceholderBox.vue'
 
@@ -35,7 +35,7 @@ useHead({   // todo for icon and favicon, send raw github image urls, ((do this 
 
 onMounted(async () => {
     let response: Response
-    const serverUrl = `http://localhost:8080/pages/${user}/${repo}/${route.params.page}`    // todo remove localhost
+    const serverUrl = `http://localhost:8080/pages/${user}/${repo}/${route.params.page}`    // todo remove localhost on prod
     try {
         const timeout = setTimeout(() => {
             throw new Error("Request timed out")
@@ -55,8 +55,8 @@ onMounted(async () => {
     page.value = await response.json()
 })
 
-const navbarPulse = ["#636468", "#4f5054"]
-const contentPulse = ["#eff0f4", "#dbdce0"]
+const navbarPulse: Pulse = { to: "#636468", from: "#4f5054" }
+const contentPulse: Pulse = { to: "#eff0f4", from: "#dbdce0" }
 </script>
 
 <template>
@@ -195,7 +195,7 @@ const contentPulse = ["#eff0f4", "#dbdce0"]
 }
 
 .doc-text {
-    padding-top: 150%;
+    padding-top: 130%;
     font-size: 0.3em;
 }
 

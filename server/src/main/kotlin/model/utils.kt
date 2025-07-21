@@ -7,15 +7,30 @@ import io.ktor.http.*
 import io.ktor.http.headers
 import io.ktor.server.plugins.*
 import io.ktor.utils.io.*
-import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
 import model.vcs.Repository
 
 private const val RAW_CONTENT_HOST = "https://raw.githubusercontent.com"
 const val GITHUB_API = "https://api.github.com"
-const val userAgent = "Ktor client"
+const val USER_AGENT = "Ktor client"
 lateinit var githubApiKey: String
+
+/**
+ * Removes the leading `"/"`, if present, so the path can be used as a subdirectory
+ * while avoiding strings like `"//"` after concatenation.
+ */
+fun path(vararg segments: String): String {
+    if (segments.isEmpty()) {
+        return ""
+    }
+    if (segments.size == 1) {
+        return segments.single()
+    }
+    val subDirs = segments.asSequence()
+        .drop(1)
+        .joinToString("/") { it.removePrefix("/").removeSuffix("/") }
+    val rootDir = segments.first().removeSuffix("/")
+    return "$rootDir/$subDirs"
+}
 
 /**
  * Given a path to a file, returns the directory it resides in.
@@ -30,25 +45,23 @@ fun String.parentDirectory(): String {
         .joinToString("/")
 }
 
-
 /**
  * Returns the file or folder name given by the path.
  * @see parentDirectory
  */
 fun String.fileName() = substringAfterLast('/')
 
-/** Deserializes the JSON object contained by the string. */
-@OptIn(InternalSerializationApi::class)
-inline fun <reified T : Any> String.decodeJsonAs() = Json.decodeFromString(T::class.serializer(), this)
-
 /**
  * Returns the contents of the file at the given location, relative to the root directory
  * of the GitHub repository of the same user and name.
  */
 suspend fun content(repo: Repository, path: String): ByteReadChannel? {
-    val contentUrl = "$RAW_CONTENT_HOST/$repo/HEAD/$path"
+    val contentUrl = path("$RAW_CONTENT_HOST/$repo/HEAD", path)
     val response = client.get(contentUrl) {
-        headers { append(HttpHeaders.UserAgent, userAgent) }
+        headers {
+            append(HttpHeaders.Authorization, "Bearer $githubApiKey")
+            append(HttpHeaders.UserAgent, USER_AGENT)
+        }
     }
     return if (response.status.isSuccess()) response.bodyAsChannel() else null
 }
@@ -60,11 +73,11 @@ suspend fun content(repo: Repository, path: String): ByteReadChannel? {
  * The request expects a response of a JSON object.
  */
 suspend fun github(endpoint: String): HttpResponse {
-    return client.get("$GITHUB_API/$endpoint") {
+    return client.get(path(GITHUB_API, endpoint)) {
         headers {
             append(HttpHeaders.Accept, "application/json")
             append(HttpHeaders.Authorization, "Bearer $githubApiKey")
-            append(HttpHeaders.UserAgent, userAgent)
+            append(HttpHeaders.UserAgent, USER_AGENT)
         }
     }
 }

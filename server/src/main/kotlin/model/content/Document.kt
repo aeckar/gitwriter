@@ -13,6 +13,10 @@ import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import java.util.concurrent.ConcurrentHashMap
 
+// todo reduce latency by requesting file structure FIRST
+// GET https://api.github.com/repos/{repo}/git/trees/main?recursive=1
+//    - Use this to resolve site.toml, content root, etc.
+
 /**
  * Contains information on the document contained by a repository.
  *
