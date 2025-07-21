@@ -29,7 +29,7 @@ async function onSubmit() {
 
 <template>
 <div class="flex-col page">
-    <div class="flex-col main-content">
+    <div class="flex-col page-content">
         <header class="flex-col">
             <div class="flex-row">
                 <AppIcon height="60px" width="60px" color="white"/>
@@ -39,7 +39,7 @@ async function onSubmit() {
             <span class="faded subtitle">Share markup with ease!</span>
         </header>
         <div class="flex-row">
-            <form v-on:submit.prevent="onSubmit">
+            <form @submit.prevent="onSubmit">
                 <v-text-field
                     width="400px"
                     class="search-bar"
@@ -73,7 +73,7 @@ async function onSubmit() {
     background-color: var(--backdrop-color);
 }
 
-.main-content {
+.page-content {
     flex: 1;    /* send footer to bottom */
 }
 
